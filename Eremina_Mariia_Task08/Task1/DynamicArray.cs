@@ -64,10 +64,11 @@ namespace Task1
                 int n = arr.Length;
                 arr1 = arr;
                 arr = new T[n * 2];
-                for (int i = 0; i < arr1.Length; i++)
-                {
-                    arr[i] = arr1[i];
-                }
+                //for (int i = 0; i < arr1.Length; i++)
+                //{
+                //    arr[i] = arr1[i];
+                //}
+                Fill(arr, arr1, 0, n, 0,0);
                 arr[arr1.Length] = item;
             }
             else
@@ -104,10 +105,11 @@ namespace Task1
                 }
                 if (n == l - 1)
                 {
-                    for (int j = 0; j < l; j++)
-                    {
-                        arr[j + i] = item[j];
-                    }
+                    //for (int j = 0; j < l; j++)
+                    //{
+                    //    arr[j + i] = item[j];
+                    //}
+                    Fill(arr, item, 0, l, i, 0);
                     insert = true;
                 }
             }
@@ -120,14 +122,16 @@ namespace Task1
                 }
                 arr1 = arr;
                 arr = new T[len + l];
-                for (int j = 0; j < len; j++)
-                {
-                    arr[j] = arr1[j];
-                }
-                for (int j = 0; j < item.Length; j++)
-                {
-                    arr[j + len] = item[j];
-                }
+                //for (int j = 0; j < len; j++)
+                //{
+                //    arr[j] = arr1[j];
+                //}
+                Fill(arr, arr1, 0, len, 0, 0);
+                //for (int j = 0; j < item.Length; j++)
+                //{
+                //    arr[j + len] = item[j];
+                //}
+                Fill(arr, item, 0, item.Length, len, 0);
             }
 
         }
@@ -136,10 +140,11 @@ namespace Task1
         {
             if (index < arr.Length)
             {
-                for (int i = index + 1; i < arr.Length; i++)
-                {
-                    arr[i - 1] = arr[i];
-                }
+                //for (int i = index + 1; i < arr.Length; i++)
+                //{
+                //    arr[i - 1] = arr[i];
+                //}
+                Fill(arr, arr, index + 1, arr.Length, -1, 0);
                 arr[arr.Length - 1] = default(T);
                 return true;
             }
@@ -162,28 +167,47 @@ namespace Task1
                 {
                     arr1 = arr;
                     arr = new T[len + 2];
-                    for (int i = 0; i < index; i++)
-                    {
-                        arr[i] = arr1[i];
-                    }
-                    for (int i = len+1; i > index; i--)
-                    {
-                        arr[i] = arr1[i - 1];
-                    }
+                    //for (int i = 0; i < index; i++)
+                    //{
+                    //    arr[i] = arr1[i];
+                    //}
+                    Fill(arr, arr1, 0, index, 0, 0);
+                    //for (int i = len+1; i > index; i--)
+                    //{
+                    //    arr[i] = arr1[i - 1];
+                    //}
+                    ReverseFill(arr, arr1, len + 1, index, 0, -1);
 
                 }
                 else
                 {
-                    for (int i = len; i > index; i--)
-                    {
-                        arr[i] = arr[i - 1];
-                    }
+                    //for (int i = len; i > index; i--)
+                    //{
+                    //    arr[i] = arr[i - 1];
+                    //}
+                    ReverseFill(arr, arr1, len, index, 0, -1);
                 }
                 arr[index] = something;
             }
             else
             {
                 throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void Fill (T[]arr, T[]arr1, int startPoint, int stopPoint, int koeff1, int koeff2)
+        {
+            for (int i = startPoint; i < stopPoint; i++)
+            {
+                arr[i+koeff1] = arr1[i+koeff2];
+            }
+        }
+
+        private void ReverseFill(T[] arr, T[] arr1, int startPoint, int stopPoint, int koeff1, int koeff2)
+        {
+            for (int i = startPoint; i > stopPoint; i--)
+            {
+                arr[i + koeff1] = arr1[i + koeff2];
             }
         }
 
