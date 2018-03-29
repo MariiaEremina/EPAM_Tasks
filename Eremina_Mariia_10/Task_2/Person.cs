@@ -9,80 +9,53 @@ using System.Threading.Tasks;
 namespace Task_2
 
 {
-
-    public delegate void Message(string name);
-    public delegate void Arrive(string name);
-    public delegate void Hello();
+    public delegate void EventHandler (Person sender, TimeArgs e);
 
     public class Person
     {
         public string Name { get; set; }
 
-        public void Greet(string anotherPerson)
+        public void Greet(string anotherPerson, DateTime time)
         {
-            Console.Write ("'");
-            DayPart.OperationDelegate hallo = DayPart.SayHello(Program.arr[0]);
-            hallo();
-           
+            if (time.Hour<6 || time.Hour>22)
+            {
+                Console.Write("'Seriously!? Go home, ");
+            }
+            else if (time.Hour < 11)
+            {
+                Console.Write("'Good morning, ");
+            }
+            else if (time.Hour < 16)
+            {
+                Console.Write("'Good afternoon, ");
+            }
+            else 
+            {
+                Console.Write("'Good evening, ");
+            }
+
             Console.WriteLine(" {0}!', {1} said.", anotherPerson, Name);
         }
 
-        public void GoodBye(string anotherPerson)
+        public void GoodBye(string anotherPerson, DateTime time)
         {
-            
             Console.WriteLine("Goodbye, {0}!', {1} said.", anotherPerson, Name);
         }
 
-        public void Arrival (int time)
-        {
-            Console.WriteLine("{0} hours, {1} came.", time, Name);
-        }
+        public event EventHandler Came;
 
-        public void Depart()
-        {
-            Console.WriteLine("{0} goes home.", Name);
-        }
-
-        public event Message Came;
-        
         public void OnCame()
         {
-            //DateTime date = DateTime.Now;
-            //int i = date.Hour;
-            //Arrival(i);
-
-            Arrival(Program.arr[0]);
-            if (Came != null)
-            {
-                Came(Name);
-                
-            }
-            Console.WriteLine();
+            Came?.Invoke(this, new TimeArgs());
         }
 
-        public event Message Departure;
+        public event EventHandler Departure;
 
         public void OnDeparture()
         {
-            Depart();
-            if (Departure != null)
-            {
-                Departure(Name);
-
-            }
-            Console.WriteLine();
+            Departure?.Invoke(this, new TimeArgs());
         }
-
-        //public Person()
-        //{
-        //    Task.Factory.StartNew(() => {
-        //        Thread.Sleep(5000);
-        //        OnCame();
-        //    });
-        //}
     }
-
-
 }
 
 

@@ -11,13 +11,7 @@ namespace Task_3
 {
     class Program
     {
-        public delegate bool Operation(string str1, string str2);
-        //public delegate void SortOp(string[] arr, Operation action);
-        public delegate void SortOp(string[] arr, Operation action);
-        static readonly object locker = new object();
-
-
-
+        public static event EventHandler FinishEvent;
         static void Main(string[] args)
         {
             string path = args[0];
@@ -27,13 +21,12 @@ namespace Task_3
                 string allString = File.ReadAllText(path);
                 if (allString.Length != 0)
                 {
-                    //Action callback1 = () => Finish("Thread finished");
+
+                    FinishEvent += Message;
+
                     string[] words = MakeArr(allString);
-                    //Sort(words, Compare);
 
-
-                    //SortOnThread(words, Sort, callback1);
-                    SortOnThread(words, Sort);
+                    SortOnThread(words);
 
                     //for (int i = 0; i < 100; i++)
                     //{
@@ -57,73 +50,57 @@ namespace Task_3
             }
             Console.ReadKey();
         }
-        //static void Fini(string message)
-        //{
-        //    Console.WriteLine(message);
-        //}
 
-        //public static void SortOnThread(string[] words, SortOp Sort, Action callback)
-        public static void SortOnThread(string[] words, SortOp Sort)
+        public static void SortOnThread(string[] words)
         {
             Thread th1 = new Thread(() =>
             {
                 Sort(words, Compare);
-                //foreach (var x in words)
-                //{
-                //    Console.WriteLine(x);
-                   
-                //}
-                MyEvent finish = new MyEvent();
-                Handler handler = new Handler();
-                finish.onFinish += handler.Message;
-                finish.Finish();
-                //callback();
 
-
+                FinishEvent?.Invoke(words, EventArgs.Empty);
             });
             th1.Start();
         }
 
-        public static void Sort(string[] arr, Operation action)
+        public static void Sort(string[] arr, Func<string, string, int> compare)
         {
-            lock (locker)
-                for (int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
+            {
+                for (int j = 0; j < arr.Length - 1 - i; j++)
                 {
-                    for (int j = 0; j < arr.Length - 1 - i; j++)
+                    if (compare(arr[j], arr[j + 1]) > 0)
                     {
-                        if (action(arr[j], arr[j + 1]))
-                        {
-                            string s = arr[j];
-                            arr[j] = arr[j + 1];
-                            arr[j + 1] = s;
-                        }
+                        string tmpString = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = tmpString;
                     }
                 }
-
+            }
         }
 
-        public static bool Compare(string str1, string str2)
+        public static int Compare(string str1, string str2)
         {
             if (str1.Length > str2.Length)
             {
-                return true;
+                return 1;
             }
             else if (str1.Length == str2.Length)
             {
-                int i = str1[0].CompareTo(str2[0]);
-                if (i > 0)
+                int i = 0;
+                int k = 0;
+                while (i == 0 && k < str1.Length)
                 {
-                    return true;
+                    i = str1[k].CompareTo(str2[k]);
+                    k++;
                 }
-                else
-                {
-                    return false;
-                }
+
+                return i;
             }
             else
             {
-                return false;
+                return 0;
             }
+
         }
 
         public static string[] MakeArr(string allString)
@@ -136,7 +113,10 @@ namespace Task_3
             return words;
         }
 
-        
+        public static void Message(object sender, EventArgs e)
+        {
+            Console.WriteLine("Сортировка завершена");
+        }
 
 
     }

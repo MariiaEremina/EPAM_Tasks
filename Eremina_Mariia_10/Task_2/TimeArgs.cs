@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task_3
+namespace Task_2
 {
-    class Handler
+    public class TimeArgs : EventArgs
     {
-        public void Message()
+        public DateTime time { get; }
+
+        public TimeArgs()
         {
-            Console.WriteLine("Thread finished");
+            time = DateTime.Now;
         }
     }
 }

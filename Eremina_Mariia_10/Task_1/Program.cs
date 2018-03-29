@@ -10,7 +10,7 @@ namespace Task_1
 {
     class Program
     {
-        public delegate bool Operation(string str1, string str2);
+        
 
         static void Main(string[] args)
         {
@@ -18,10 +18,10 @@ namespace Task_1
 
             if (File.Exists(path))
             {
-                string allString = File.ReadAllText(path);
-                if (allString.Length != 0)
+                string allText = File.ReadAllText(path);
+                if (!(String.IsNullOrEmpty(allText)))
                 {
-                    string[] words = MakeArr(allString);
+                    string[] words = MakeArr(allText);
                     Sort(words, Compare);
 
                     foreach (var x in words)
@@ -41,44 +41,45 @@ namespace Task_1
             Console.ReadKey();
         }
 
-        public static void Sort(string[] arr, Operation action)
+        public static void Sort(string[] arr, Func <string, string, int> compare)
         {
             for (int i = 0; i < arr.Length; i++)
             {
                 for (int j = 0; j < arr.Length - 1 - i; j++)
                 {
-                    if (action(arr[j], arr[j + 1]))
+                    if (compare(arr[j], arr[j + 1])>0)
                     {
-                        string s = arr[j];
+                        string tmpString = arr[j];
                         arr[j] = arr[j + 1];
-                        arr[j + 1] = s;
+                        arr[j + 1] = tmpString;
                     }
                 }
             }
         }
 
-        public static bool Compare (string str1, string str2)
+        public static int Compare (string str1, string str2)
         {
             if (str1.Length > str2.Length)
             {
-                return true;
+                return 1;
             }
             else if (str1.Length == str2.Length)
             {
-                int i = str1[0].CompareTo(str2[0]);
-                if (i>0)
+                int i = 0;
+                int k = 0;
+                while (i == 0 && k < str1.Length)
                 {
-                    return true;
+                    i = str1[k].CompareTo(str2[k]);
+                    k++;
                 }
-                else
-                {
-                    return false;
-                }
+               
+                return i;
             }
             else
             {
-                return false;
+                return 0;
             }
+            
         }
 
         public static string[] MakeArr(string allString)
