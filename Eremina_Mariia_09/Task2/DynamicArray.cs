@@ -47,16 +47,18 @@ namespace Task1
 
         public DynamicArray(IEnumerable<T> enumArr)
         {
-            int i = 0;
-            foreach (T smth in enumArr)
-            {
-                i++;
-            }
-            arr = new T[i];
-            foreach (T smth in enumArr)
-            {
-                arr[i] = smth;
-            }
+
+            arr = enumArr.ToArray();
+            //int i = 0;
+            //foreach (T smth in enumArr)
+            //{
+            //    i++;
+            //}
+            //arr = new T[i];
+            //foreach (T smth in enumArr)
+            //{
+            //    arr[i] = smth;
+            //}
         }
 
         //public DynamicArray(IEnumerable enumArr)

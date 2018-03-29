@@ -42,9 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LinkedListToDropOut.cs" />
-    <Compile Include="ListToDropOut.cs" />
-    <Compile Include="MutualMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

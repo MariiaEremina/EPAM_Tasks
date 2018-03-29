@@ -16,15 +16,17 @@ namespace Task_3
 
             if (File.Exists(path))
             {
-                string allString = File.ReadAllText(path);
-                if (allString.Length != 0)
+                string allText = File.ReadAllText(path);
+                if (!(String.IsNullOrEmpty(allText)))
                 {
-                    Dictionary<string, int> dic = new Dictionary<string, int>();
-                    Operations(allString, dic);
-                    foreach (var x in dic.OrderBy(x => x.Key))
-                    {
-                        Console.WriteLine("<{0}> - <{1}>", x.Key, x.Value);
-                    }
+                    //var wordsDictionary = FillWithCountedWords(allText);
+                    WordsCounter wordsCounter = new WordsCounter(allText);
+                    Console.WriteLine(wordsCounter.GetKeyWords());
+
+                    //foreach (var x in wordsDictionary.OrderBy(x => x.Key))
+                    //{
+                    //    Console.WriteLine("<{0}> - <{1}>", x.Key, x.Value);
+                    //}
                 }
                 else
                 {
@@ -39,30 +41,32 @@ namespace Task_3
 
         }
 
-        public static void Operations (string allString, Dictionary<string, int> dic)
-        {
-            string[] words = MakeArr(allString);
-            for (int i = 0; i<words.Length; i++)
-            {
-                if (dic.ContainsKey(words[i]))
-                {
-                    dic[words[i]]++; 
-                }
-                else
-                {
-                    dic.Add(words[i], 1);
-                }
-            }
-        }
+        //public static Dictionary<string, int> FillWithCountedWords (string allText)
+        //{
+        //    Dictionary<string, int> localWordsDictionary = new Dictionary<string, int>();
+        //    string[] words = MakeArr(allText);
+        //    for (int i = 0; i<words.Length; i++)
+        //    {
+        //        if (localWordsDictionary.ContainsKey(words[i]))
+        //        {
+        //            localWordsDictionary[words[i]]++; 
+        //        }
+        //        else
+        //        {
+        //            localWordsDictionary.Add(words[i], 1);
+        //        }
+        //    }
+        //    return localWordsDictionary;
+        //}
 
-        public static string [] MakeArr (string allString)
-        {
-            allString = allString.ToLower();
-            string pattern = @"[\p{P}||\r+||\n||\p{Pd}]";
-            string replacement = " ";
-            string result = Regex.Replace(allString, pattern, replacement);
-            string[] words = result.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            return words;
-        }
+        //public static string [] MakeArr (string allText)
+        //{
+        //    allText = allText.ToLower();
+        //    string pattern = @"[\p{P}||\r+||\n||\p{Pd}]";
+        //    string replacement = " ";
+        //    string result = Regex.Replace(allText, pattern, replacement);
+        //    string[] words = result.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        //    return words;
+        //}
     }
 }
