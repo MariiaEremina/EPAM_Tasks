@@ -9,8 +9,7 @@ namespace Shared
     public class User
     {
 
-        private static int id = 0;
-        public int ID { get; private set; }
+        
         //{
         //    get
         //    {
@@ -29,7 +28,8 @@ namespace Shared
         public int Age { get; }
         public string Rewards { get; private set; }
         public List<Reward> reward { get; set; }
-        
+        private static int id = 0;
+        public int ID { get; set; }
 
 
         //public User()
@@ -49,6 +49,17 @@ namespace Shared
             id++;
         }
 
+        public User(string firstName, string lastName, DateTime birthdate, List<Reward> rew, int Id)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Birthdate = birthdate;
+            Age = GetAge(birthdate);
+            reward = rew;
+            Rewards = String(reward);
+            ID = Id;
+        }
+
         public User(string firstName, string lastName, DateTime birthdate)
         {
             FirstName = firstName;
@@ -59,6 +70,17 @@ namespace Shared
             Rewards = String(reward);
             ID = id;
             id++;
+        }
+
+        public User(string firstName, string lastName, DateTime birthdate, int Id)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Birthdate = birthdate;
+            Age = GetAge(birthdate);
+            reward = new List<Reward>();
+            Rewards = String(reward);
+            ID = Id;
         }
 
         private int GetAge(DateTime birthdate)

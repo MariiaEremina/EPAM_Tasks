@@ -44,9 +44,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data_access_layer\Data_access_layer.csproj">
+    <ProjectReference Include="..\Data_access_layer\DataAccessLayer.csproj">
       <Project>{2B0900C1-86E8-4A17-AF96-19C36C4AD74B}</Project>
-      <Name>Data_access_layer</Name>
+      <Name>DataAccessLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{9B7EFA44-799B-4559-9F38-0E3CA1795DED}</Project>

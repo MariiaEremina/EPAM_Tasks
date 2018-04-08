@@ -9,9 +9,10 @@ namespace Shared
     public class Reward
     {
         private static int id = 0;
-        public int ID { get; private set; }
+        
         public string Title { get; set; }
         public string Description { get; set; }
+        public int ID { get; set; }
 
         public Reward (string title)
         {
@@ -27,6 +28,22 @@ namespace Shared
             Description = description;
             ID = id;
             id++;
+        }
+
+        public Reward(string title, string description, int Id)
+        {
+            Title = title;
+            Description = description;
+            ID = Id;
+            //id++;
+        }
+
+        public Reward(string title, int Id)
+        {
+            Title = title;
+            Description = null;
+            ID = Id;
+            //id++;
         }
 
         public Reward()

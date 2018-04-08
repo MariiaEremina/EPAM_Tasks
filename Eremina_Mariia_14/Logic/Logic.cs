@@ -10,7 +10,8 @@ namespace LogicLayer
 {
     public class Logic
     {
-        Data data = new Data();
+        //Data data = new Data();
+        DataInDB data = new DataInDB();
 
         public List<User> GetUsers()
         {
@@ -44,10 +45,29 @@ namespace LogicLayer
         {
             data.RemoveUser(user);
         }
-
         public void RemoveReward(Reward reward)
         {
             data.RemoveReward(reward);
+        }
+        public void EditUser(User user)
+        {
+            data.EditUser(user);
+        }
+        public void EditReward(Reward reward)
+        {
+            data.EditReward(reward);
+        }
+
+        public User GetUserById(int id)
+        {
+            User user = data.GetUserById(id);
+            return user;
+        }
+
+        public Reward GetRewardById(int id)
+        {
+            Reward reward = data.GetRewardById(id);
+            return reward;
         }
     }
 }

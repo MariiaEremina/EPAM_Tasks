@@ -52,8 +52,16 @@ namespace View
             idColumn2.DataPropertyName = "Description";
             idColumn2.ReadOnly = true;
 
+            DataGridViewTextBoxColumn idColumn3 =
+            new DataGridViewTextBoxColumn();
+            idColumn3.Name = "ID";
+            idColumn3.DataPropertyName = "ID";
+            idColumn3.ReadOnly = true;
+            idColumn3.Visible = false;
+
             ctlDataRewards.Columns.Add(idColumn1);
             ctlDataRewards.Columns.Add(idColumn2);
+            ctlDataRewards.Columns.Add(idColumn3);
         }
 
         private void AddColumns()
@@ -88,11 +96,12 @@ namespace View
             idColumn5.DataPropertyName = "Rewards";
             idColumn5.ReadOnly = true;
 
-            //DataGridViewTextBoxColumn idColumn6 =
-            //new DataGridViewTextBoxColumn();
-            //idColumn6.Name = "ID";
-            //idColumn6.DataPropertyName = "ID";
-            //idColumn6.ReadOnly = true;
+            DataGridViewTextBoxColumn idColumn6 =
+            new DataGridViewTextBoxColumn();
+            idColumn6.Name = "ID";
+            idColumn6.DataPropertyName = "ID";
+            idColumn6.ReadOnly = true;
+            idColumn6.Visible = false;
 
 
 
@@ -101,7 +110,7 @@ namespace View
             ctlDataUsers_n_Rewards.Columns.Add(idColumn3);
             ctlDataUsers_n_Rewards.Columns.Add(idColumn4);
             ctlDataUsers_n_Rewards.Columns.Add(idColumn5);
-            //dataUsers_n_Rewards.Columns.Add(idColumn6);
+            ctlDataUsers_n_Rewards.Columns.Add(idColumn6);
 
         }
 
@@ -166,8 +175,11 @@ namespace View
         {
             if (ctlDataUsers_n_Rewards.SelectedCells.Count > 0)
             {
-                User user = (User)ctlDataUsers_n_Rewards.SelectedCells[0].OwningRow.DataBoundItem;
+                DataGridViewRow row = ctlDataUsers_n_Rewards.SelectedCells[0].OwningRow;
 
+                var id = (int)row.Cells[5].Value;
+
+                User user = logic.GetUserById(id);
                 AddUser edit = new AddUser(logic, user);
                 if (edit.ShowDialog(this) == DialogResult.OK)
                 {
@@ -176,6 +188,7 @@ namespace View
                     user.Birthdate = edit.BirthDate;
                     user.reward = edit.ResultRewards;
                     user.RefreshRewards(user.reward);
+                    logic.EditUser(user);
                 }
             }
             RefreshGrid();
@@ -185,13 +198,18 @@ namespace View
         {
             if (ctlDataUsers_n_Rewards.SelectedCells.Count > 0)
             {
-                User user = (User)ctlDataUsers_n_Rewards.SelectedCells[0].OwningRow.DataBoundItem;
+                DataGridViewRow row = ctlDataUsers_n_Rewards.SelectedCells[0].OwningRow;
+
+                var id = (int)row.Cells[5].Value;
+
+                User user = logic.GetUserById(id);
+                //User user = (User)ctlDataUsers_n_Rewards.SelectedCells[0].OwningRow.DataBoundItem;
                 DialogResult result = MessageBox.Show(
-        "Are you sure?",
-        "Remove",
-        MessageBoxButtons.OKCancel,
-        MessageBoxIcon.Information,
-        MessageBoxDefaultButton.Button1
+                 "Are you sure?",
+                 "Remove",
+                 MessageBoxButtons.OKCancel,
+                 MessageBoxIcon.Information,
+                 MessageBoxDefaultButton.Button1
         );
 
                 if (result == DialogResult.OK)
@@ -222,13 +240,17 @@ namespace View
 
             if (ctlDataRewards.SelectedCells.Count > 0)
             {
-                Reward reward = (Reward)ctlDataRewards.SelectedCells[0].OwningRow.DataBoundItem;
+                DataGridViewRow row = ctlDataRewards.SelectedCells[0].OwningRow;
+                var id = (int)row.Cells[2].Value;
+
+                Reward reward = logic.GetRewardById(id);
 
                 AddReward edit = new AddReward(reward);
                 if (edit.ShowDialog(this) == DialogResult.OK)
                 {
                     reward.Title = edit.Title;
                     reward.Description = edit.Description;
+                    logic.EditReward(reward);
                 }
             }
             RefreshGrid();
@@ -238,7 +260,12 @@ namespace View
         {
             if (ctlDataRewards.SelectedCells.Count > 0)
             {
-                Reward removeReward = (Reward)ctlDataRewards.SelectedCells[0].OwningRow.DataBoundItem;
+                //Reward removeReward = (Reward)ctlDataRewards.SelectedCells[0].OwningRow.DataBoundItem;
+
+                DataGridViewRow row = ctlDataRewards.SelectedCells[0].OwningRow;
+                var id = (int)row.Cells[2].Value;
+
+                Reward removeReward = logic.GetRewardById(id);
 
                 DialogResult result = MessageBox.Show(
                     "Are you sure?",

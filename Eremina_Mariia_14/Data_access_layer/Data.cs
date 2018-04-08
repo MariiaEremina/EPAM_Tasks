@@ -103,5 +103,26 @@ namespace Data_access_layer
             rewards.Remove(removeReward);
 
         }
+
+        public void EditUser(User user)
+        {
+
+        }
+        public void EditReward(Reward reward)
+        {
+
+        }
+
+        //public User GetUserById(int id)
+        //{
+
+        //    return user;
+        //}
+
+        //public Reward GetRewardById(int id)
+        //{
+
+        //    return reward;
+        //}
     }
 }
