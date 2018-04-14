@@ -2,6 +2,7 @@
 using Shared;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,9 @@ namespace LogicLayer
     public class Logic
     {
         //Data data = new Data();
-        DataInDB data = new DataInDB();
+        //static string path = @"Data Source =.\SQLEXPRESS;Initial Catalog = Users_n_Rewards; Integrated Security = True";
+        static string path = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        DataInDB data = new DataInDB(path);
 
         public List<User> GetUsers()
         {

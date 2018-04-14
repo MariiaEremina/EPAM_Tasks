@@ -1,0 +1,25 @@
+﻿@model List<Shared.User>
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Index</h2>
+
+<table border="1">
+    <tbody>
+
+        @foreach (var user in Model)
+        {
+            <tr>
+                <th>@user.FirstName</th>
+                <th>@user.LastName</th>
+                <th>@user.Birthdate</th>
+                <th>@user.Age</th>
+                <th>@user.Rewards</th>
+            </tr>
+        }
+    </tbody>
+</table>
+

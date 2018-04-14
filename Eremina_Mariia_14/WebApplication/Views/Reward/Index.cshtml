@@ -1,0 +1,21 @@
+﻿@model List<Shared.Reward>
+@{
+    ViewBag.Title = "Rewards";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Index</h2>
+
+<table border="1">
+    <tbody>
+
+        @foreach (var reward in Model)
+        {
+            <tr>
+                <th>@reward.Title</th>
+                <th>@reward.Description</th>
+            </tr>
+        }
+    </tbody>
+</table>

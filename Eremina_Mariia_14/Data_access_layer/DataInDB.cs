@@ -12,10 +12,16 @@ namespace Data_access_layer
     public class DataInDB
     {
 
+        static string connectionString { get; set; }
+
+        public DataInDB(string connectionPath)
+        {
+            connectionString = connectionPath;
+        }
 
         static void OpenDB()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            //string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -38,7 +44,6 @@ namespace Data_access_layer
         {
             List<Reward> rewards = new List<Reward>();
             List<int> ids = new List<int>(0);
-            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             string sqlExpression = "GetUsersRewards";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -80,7 +85,6 @@ namespace Data_access_layer
         public List<User> GetUsersWithoutRewards()
         {
             List<User> users = new List<User>();
-            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             string sqlExpression = "GetUsers";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -111,7 +115,6 @@ namespace Data_access_layer
         {
             List<Reward> rewards = new List<Reward>();
             Reward newReward;
-            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             string sqlExpression = "GetRewards";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -227,7 +230,6 @@ namespace Data_access_layer
         public void AddUser(User user1)
         {
             
-                string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
                 string sqlExpression = "AddUserWithoutRewards";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -269,9 +271,7 @@ namespace Data_access_layer
                 List<Reward> rew = user1.reward;
                 foreach (Reward reward in rew)
                 {
-                    string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
                     string sqlExpression = "MakeConnection";
-
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
@@ -299,7 +299,6 @@ namespace Data_access_layer
         {
             if (reward1.Description != null)
             {
-                string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
                 string sqlExpression = "AddReward";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -404,7 +403,6 @@ namespace Data_access_layer
 
         public void RemoveUser(User user)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             string sqlExpression = "RemoveUser";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -424,8 +422,6 @@ namespace Data_access_layer
 
         public void RemoveReward(Reward removeReward)
         {
-
-            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             string sqlExpression = "RemoveReward";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -496,7 +492,6 @@ namespace Data_access_layer
 
         public void EditUser(User user)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             string sqlExpression = "RefreshUser";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -539,7 +534,6 @@ namespace Data_access_layer
 
         public void EditReward(Reward reward)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             string sqlExpression = "RefreshReward";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -579,7 +573,6 @@ namespace Data_access_layer
         {
             List<User> users = new List<User>();
             User user;
-            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             string sqlExpression = "GetUser";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -618,7 +611,6 @@ namespace Data_access_layer
         {
             List <Reward> reward = new List <Reward> ();
             Reward newReward;
-            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             string sqlExpression = "GetReward";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -660,7 +652,6 @@ namespace Data_access_layer
 
         public void RefreshBD()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             string sqlExpression = "DeleteEverything";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
