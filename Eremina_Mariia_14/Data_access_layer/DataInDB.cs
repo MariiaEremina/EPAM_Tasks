@@ -603,6 +603,7 @@ namespace Data_access_layer
                 reader.Close();
             }
             user = users[0];
+            user.reward = GetUserReward(id);
             return user;
 
         }

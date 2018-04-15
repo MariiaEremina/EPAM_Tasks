@@ -5,21 +5,36 @@
 }
 
 
-<h2>Index</h2>
-
-<table border="1">
+<table class="table">
+    <caption><h2>Users</h2></caption>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Lastname</th>
+            <th>Birthdate</th>
+            <th>Age</th>
+            <th>Rewards</th>
+            <th> </th>
+            <th> </th>
+        </tr>
+    </thead>
     <tbody>
 
         @foreach (var user in Model)
         {
-            <tr>
-                <th>@user.FirstName</th>
-                <th>@user.LastName</th>
-                <th>@user.Birthdate</th>
-                <th>@user.Age</th>
-                <th>@user.Rewards</th>
-            </tr>
+        <tr>
+            <td>@user.FirstName</td>
+            <td>@user.LastName</td>
+            <td>@user.Birthdate.ToShortDateString()</td>
+            <td>@user.Age</td>
+            <td>@user.Rewards</td>
+            <td><a href="User/Edit?id=@user.ID">Edit</a></td>
+            <td><a href="User/Delete?id=@user.ID">Delete</a></td>
+        </tr>
         }
     </tbody>
+
 </table>
+
+<h4 class="btn"><a href="User/Add">Add new user</a></h4>
 

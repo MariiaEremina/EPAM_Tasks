@@ -32,11 +32,10 @@ namespace Shared
         public int ID { get; set; }
 
 
-        //public User()
-        //{
-        //    //ID = id;
-        //    //id++;
-        //}
+        public User()
+        {
+        }
+
         public User(string firstName, string lastName, DateTime birthdate, List<Reward> rew)
         {
             FirstName = firstName;

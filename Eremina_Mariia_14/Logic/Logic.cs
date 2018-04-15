@@ -11,10 +11,18 @@ namespace LogicLayer
 {
     public class Logic
     {
+
+        public DataInDB data;
+        public string path;
+
+        public Logic()
+        {
+            path = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            data = new DataInDB(path);
+        }
         //Data data = new Data();
         //static string path = @"Data Source =.\SQLEXPRESS;Initial Catalog = Users_n_Rewards; Integrated Security = True";
-        static string path = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-        DataInDB data = new DataInDB(path);
+        
 
         public List<User> GetUsers()
         {

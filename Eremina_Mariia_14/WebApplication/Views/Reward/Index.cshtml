@@ -5,17 +5,28 @@
 }
 
 
-<h2>Index</h2>
-
-<table border="1">
+<table class="table">
+    <caption><h2>Rewards</h2></caption>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th> </th>
+            <th> </th>
+        </tr>
+    </thead>
     <tbody>
 
         @foreach (var reward in Model)
         {
-            <tr>
-                <th>@reward.Title</th>
-                <th>@reward.Description</th>
-            </tr>
+        <tr>
+            <td>@reward.Title</td>
+            <td>@reward.Description</td>
+            <td><a href="Reward/Edit?id=@reward.ID">Edit</a></td>
+            <td><a href="Reward/Delete?id=@reward.ID">Delete</a></td>
+        </tr>
         }
     </tbody>
 </table>
+
+<h4 class="btn"><a href="Reward/Add">Add new reward</a></h4>
